@@ -59,6 +59,9 @@ samples/Cpp/TestCpp/proj.winrt/Assets/Resources/
 samples/Cpp/HelloCpp/proj.wp8/Assets/Resources/
 samples/Cpp/TestCpp/proj.wp8/Assets/Resources/
 
+# Allow prebuilt third party libs
+!cocos2dx/platform/third_party/*/prebuilt/*/libs/
+
 # Ignore files built by NaCl
 samples/Cpp/HelloCpp/proj.nacl/Resources/
 samples/Cpp/TestCpp/proj.nacl/Resources/
