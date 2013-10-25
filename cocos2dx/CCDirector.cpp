@@ -64,7 +64,7 @@ THE SOFTWARE.
 #include "platform/CCImage.h"
 #include "CCEGLView.h"
 #include "CCConfiguration.h"
-
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 
 
 /**
@@ -152,6 +152,9 @@ bool CCDirector::init(void)
     m_pTouchDispatcher = new CCTouchDispatcher();
     m_pTouchDispatcher->init();
 
+    // KeyboardDispatcher
+    _keyboardDispatcher = new KeyboardDispatcher();
+
     // KeypadDispatcher
     m_pKeypadDispatcher = new CCKeypadDispatcher();
 
@@ -178,6 +181,7 @@ CCDirector::~CCDirector(void)
     CC_SAFE_RELEASE(m_pScheduler);
     CC_SAFE_RELEASE(m_pActionManager);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
+    CC_SAFE_RELEASE(_keyboardDispatcher);
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
     CC_SAFE_DELETE(m_pAccelerometer);
 
@@ -1015,6 +1019,18 @@ void CCDirector::setTouchDispatcher(CCTouchDispatcher* pTouchDispatcher)
 CCTouchDispatcher* CCDirector::getTouchDispatcher()
 {
     return m_pTouchDispatcher;
+}
+
+void CCDirector::setKeyboardDispatcher(KeyboardDispatcher* pKeyboardDispatcher)
+{
+    CC_SAFE_RETAIN(pKeyboardDispatcher);
+    CC_SAFE_RELEASE(_keyboardDispatcher);
+    _keyboardDispatcher = pKeyboardDispatcher;
+}
+
+KeyboardDispatcher* CCDirector::getKeyboardDispatcher()
+{
+    return _keyboardDispatcher;
 }
 
 void CCDirector::setKeypadDispatcher(CCKeypadDispatcher* pKeypadDispatcher)

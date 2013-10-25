@@ -38,6 +38,7 @@ THE SOFTWARE.
 #include "support/TransformUtils.h"
 // extern
 #include "kazmath/GL/matrix.h"
+#include "keyboard_dispatcher/CCKeyboardDispatcher.h"
 
 NS_CC_BEGIN
 
@@ -45,6 +46,7 @@ NS_CC_BEGIN
 CCLayer::CCLayer()
 : m_bTouchEnabled(false)
 , m_bAccelerometerEnabled(false)
+, _keyboardEnabled(false)
 , m_bKeypadEnabled(false)
 , m_pScriptTouchHandlerEntry(NULL)
 , m_pScriptKeypadHandlerEntry(NULL)
@@ -212,6 +214,8 @@ int CCLayer::getTouchMode()
     return m_eTouchMode;
 }
 
+
+
 /// isAccelerometerEnabled getter
 bool CCLayer::isAccelerometerEnabled()
 {
@@ -271,6 +275,32 @@ void CCLayer::registerScriptAccelerateHandler(int nHandler)
 void CCLayer::unregisterScriptAccelerateHandler(void)
 {
     CC_SAFE_RELEASE_NULL(m_pScriptAccelerateHandlerEntry);
+}
+
+/// isKeyboardEnabled getter
+bool CCLayer::isKeyboardEnabled() const
+{
+    return _keyboardEnabled;
+}
+/// isKeyboardEnabled setter
+void CCLayer::setKeyboardEnabled(bool enabled)
+{
+    if (enabled != _keyboardEnabled)
+    {
+        _keyboardEnabled = enabled;
+
+        CCDirector* pDirector = CCDirector::sharedDirector();
+        if (enabled)
+        {
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate( CC_CALLBACK_1(CCLayer::keyPressed, this) );
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate( CC_CALLBACK_1(CCLayer::keyReleased, this) );
+        }
+        else
+        {
+            pDirector->getKeyboardDispatcher()->setKeyPressDelegate(nullptr);
+            pDirector->getKeyboardDispatcher()->setKeyReleaseDelegate(nullptr);
+        }
+    }
 }
 
 /// isKeypadEnabled getter

@@ -40,6 +40,7 @@ SOURCES = ../actions/CCAction.cpp \
 ../draw_nodes/CCDrawNode.cpp \
 ../effects/CCGrabber.cpp \
 ../effects/CCGrid.cpp \
+../keyboard_dispatcher/CCKeyboardDispatcher.cpp \
 ../keypad_dispatcher/CCKeypadDelegate.cpp \
 ../keypad_dispatcher/CCKeypadDispatcher.cpp \
 ../label_nodes/CCLabelAtlas.cpp \
